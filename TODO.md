@@ -24,7 +24,7 @@
 
 - [ ] **Showcase on GitHub Profile ([`aljazkovac/aljazkovac`](https://github.com/aljazkovac/aljazkovac)):**
   Add `github-as-code` to the **Current Projects** section of your profile `README.md`.
-- [ ] **Commit Roadmap Update in `cockpit`:**
+- [x] **Commit Roadmap Update in `cockpit`:**
   Commit and push the completed `github-as-code` checkboxes in `cockpit/roadmap/1-short-term-now.md`.
 
 ---
@@ -40,3 +40,4 @@
   - Add a weekly `schedule` (`cron`) trigger to [`.github/workflows/opentofu.yml`](./.github/workflows/opentofu.yml) to check for out-of-band UI changes across repositories.
 - [ ] *(Optional)* **Import Historical Archived Repositories:**
   - Decide whether to import the 24 already-archived coursework/university repositories into a separate `archived_repos.tf` map for complete account-wide inventory.
+

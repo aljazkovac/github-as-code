@@ -76,3 +76,4 @@ For **GitHub Actions** ([`.github/workflows/opentofu.yml`](./.github/workflows/o
    ```bash
    gh secret set GH_PAT --repo aljazkovac/github-as-code
    ```
+
