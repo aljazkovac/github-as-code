@@ -102,11 +102,10 @@ resource "github_repository" "repos" {
   archived    = each.value.archived
   topics      = each.value.topics
 
-  has_issues           = each.value.has_issues
-  has_wiki             = each.value.has_wiki
-  has_projects         = each.value.has_projects
-  has_discussions      = each.value.has_discussions
-  vulnerability_alerts = !each.value.archived
+  has_issues      = each.value.has_issues
+  has_wiki        = each.value.has_wiki
+  has_projects    = each.value.has_projects
+  has_discussions = each.value.has_discussions
 
   allow_merge_commit     = true
   allow_squash_merge     = true
