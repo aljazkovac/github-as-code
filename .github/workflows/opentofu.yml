@@ -12,6 +12,7 @@ on:
       - "terraform.tfstate.backup"
       - "README.md"
       - "ARCHITECTURE.md"
+      - "TODO.md"
   workflow_dispatch:
 
 concurrency:
