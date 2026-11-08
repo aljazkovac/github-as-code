@@ -1,0 +1,108 @@
+name: OpenTofu GitOps
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - "terraform.tfstate"
+      - "terraform.tfstate.backup"
+      - "README.md"
+  workflow_dispatch:
+
+concurrency:
+  group: opentofu-state
+  cancel-in-progress: false
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+  TF_VAR_state_encryption_passphrase: ${{ secrets.TF_VAR_state_encryption_passphrase }}
+
+jobs:
+  opentofu:
+    name: "OpenTofu Plan & Apply"
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_PAT }}
+
+      - name: Setup OpenTofu
+        uses: opentofu/setup-opentofu@v1
+        with:
+          tofu_version: "latest"
+
+      - name: OpenTofu Format Check
+        run: tofu fmt -check
+
+      - name: OpenTofu Init
+        run: tofu init -input=false
+
+      - name: OpenTofu Validate
+        run: tofu validate
+
+      - name: OpenTofu Plan
+        id: plan
+        run: |
+          tofu plan -no-color -input=false -out=tfplan 2>&1 | tee plan_output.txt
+        continue-on-error: false
+
+      - name: Post Plan Comment on Pull Request
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GH_PAT }}
+          script: |
+            const fs = require('fs');
+            const plan = fs.readFileSync('plan_output.txt', 'utf8');
+            const maxLen = 60000;
+            const truncatedPlan = plan.length > maxLen ? plan.substring(0, maxLen) + '\n... (truncated)' : plan;
+            const body = `### OpenTofu Plan Output (\`${{ github.head_ref }}\`)\n\n\`\`\`hcl\n${truncatedPlan}\n\`\`\``;
+
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+            const botComment = comments.find(c => c.body.includes('### OpenTofu Plan Output'));
+            if (botComment) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body,
+              });
+            }
+
+      - name: OpenTofu Apply
+        if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+        run: tofu apply -input=false -auto-approve tfplan
+
+      - name: Commit Updated Encrypted State
+        if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if ! git diff --quiet terraform.tfstate; then
+            git add terraform.tfstate
+            git commit -m "chore(state): update encrypted OpenTofu state [skip ci]"
+            git push origin HEAD:main
+          else
+            echo "No state changes to commit."
+          fi
+

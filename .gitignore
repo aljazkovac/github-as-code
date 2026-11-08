@@ -1,0 +1,19 @@
+# Local OpenTofu directories & backups
+.terraform/
+*.tfstate.backup
+*.tfplan
+tfplan
+plan_output.txt
+crash.log
+crash.*.log
+
+# Local environment secrets (never commit!)
+.env
+*.tfvars
+*.tfvars.json
+
+# OS & Editor files
+.DS_Store
+.idea/
+.vscode/
+
