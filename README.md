@@ -2,6 +2,8 @@
 
 Declarative Infrastructure-as-Code (IaC) repository that manages all active **`aljazkovac`** GitHub repositories, descriptions, topics, visibility, archive states, and branch protection rulesets using **OpenTofu (`tofu`)**, the **`integrations/github`** provider, and **GitHub Actions**.
 
+> **Deep Dive:** See **[`ARCHITECTURE.md`](./ARCHITECTURE.md)** for a full walkthrough of how **PBKDF2 + AES-GCM** state encryption works, how the AI-agent branch protection ruleset tiers are designed, and how to configure `GH_PAT` for CI/CD.
+
 ---
 
 ## Architecture Highlights
