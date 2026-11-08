@@ -19,8 +19,8 @@ locals {
       archived               = false
       topics                 = []
       has_issues             = true
-      has_wiki               = true
-      has_projects           = true
+      has_wiki               = false
+      has_projects           = false
       has_discussions        = false
       delete_branch_on_merge = false
       protection_tier        = "direct-push"

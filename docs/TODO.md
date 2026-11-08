@@ -2,7 +2,7 @@
 
 ## 1. Immediate Setup (Cloud CI/CD & Key Backup)
 
-- [ ] **Configure `GH_PAT` Secret for GitHub Actions:**
+- [x] **Configure `GH_PAT` Secret for GitHub Actions:**
   1. Go to [GitHub Fine-Grained Personal Access Tokens](https://github.com/settings/personal-access-tokens/new).
   2. Set **Repository access** to **All repositories**.
   3. Grant **Repository permissions**:
@@ -13,7 +13,7 @@
      ```bash
      gh secret set GH_PAT --repo aljazkovac/github-as-code
      ```
-- [ ] **Back Up Encryption Passphrase in Password Manager:**
+- [x] **Back Up Encryption Passphrase in Password Manager:**
   Save the `state_encryption_passphrase` value from your local `terraform.tfvars` into your password manager so you can always decrypt `terraform.tfstate` if you switch machines.
 - [ ] **Verify End-to-End PR Pipeline:**
   Create a small feature branch, open a Pull Request against `main`, verify that the `OpenTofu Plan Output` comment is posted automatically, and squash-merge to confirm `tofu apply` runs in GitHub Actions.
