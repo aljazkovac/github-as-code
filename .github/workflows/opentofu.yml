@@ -32,48 +32,39 @@ jobs:
       pull-requests: write
 
     steps:
-      - name: Check if GH_PAT secret is configured
-        id: check_pat
+      - name: Verify required secrets are configured
         run: |
           if [ -z "${{ secrets.GH_PAT }}" ]; then
-            echo "::notice title=GH_PAT Not Configured::Skipping cloud OpenTofu run because the GH_PAT repository secret is not set yet. See TODO.md."
-            echo "pat_configured=false" >> "$GITHUB_OUTPUT"
-          else
-            echo "pat_configured=true" >> "$GITHUB_OUTPUT"
+            echo "::error title=Missing GH_PAT Secret::The GH_PAT repository secret is not set. See TODO.md for setup instructions."
+            exit 1
           fi
 
       - name: Checkout repository
-        if: steps.check_pat.outputs.pat_configured == 'true'
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GH_PAT }}
 
       - name: Setup OpenTofu
-        if: steps.check_pat.outputs.pat_configured == 'true'
         uses: opentofu/setup-opentofu@v1
         with:
           tofu_version: "latest"
 
       - name: OpenTofu Format Check
-        if: steps.check_pat.outputs.pat_configured == 'true'
         run: tofu fmt -check
 
       - name: OpenTofu Init
-        if: steps.check_pat.outputs.pat_configured == 'true'
         run: tofu init -input=false
 
       - name: OpenTofu Validate
-        if: steps.check_pat.outputs.pat_configured == 'true'
         run: tofu validate
 
       - name: OpenTofu Plan
-        if: steps.check_pat.outputs.pat_configured == 'true'
         id: plan
         run: |
           tofu plan -no-color -input=false -out=tfplan 2>&1 | tee plan_output.txt
 
       - name: Post Plan Comment on Pull Request
-        if: steps.check_pat.outputs.pat_configured == 'true' && github.event_name == 'pull_request'
+        if: github.event_name == 'pull_request'
         uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.GH_PAT }}
@@ -107,11 +98,11 @@ jobs:
             }
 
       - name: OpenTofu Apply
-        if: steps.check_pat.outputs.pat_configured == 'true' && github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+        if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
         run: tofu apply -input=false -auto-approve tfplan
 
       - name: Commit Updated Encrypted State
-        if: steps.check_pat.outputs.pat_configured == 'true' && github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+        if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
