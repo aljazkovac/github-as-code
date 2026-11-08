@@ -35,7 +35,7 @@ jobs:
       - name: Verify required secrets are configured
         run: |
           if [ -z "${{ secrets.GH_PAT }}" ]; then
-            echo "::error title=Missing GH_PAT Secret::The GH_PAT repository secret is not set. See TODO.md for setup instructions."
+            echo "::error title=Missing GH_PAT Secret::The GH_PAT repository secret is not set. See docs/TODO.md for setup instructions."
             exit 1
           fi
 

@@ -17,7 +17,7 @@ flowchart LR
 
 Managing Infrastructure-as-Code typically requires an external backend (such as HCP Terraform, AWS S3, or Google Cloud Storage) to store `terraform.tfstate` securely because standard Terraform writes state in **plain-text JSON**.
 
-By using **OpenTofu** (the Linux Foundation / CNCF open-source fork of Terraform), we gain **native client-side state and plan encryption** ([`versions.tf`](./versions.tf)) out of the box—allowing `terraform.tfstate` to be safely committed directly to this public GitHub repository with **zero external cloud accounts**.
+By using **OpenTofu** (the Linux Foundation / CNCF open-source fork of Terraform), we gain **native client-side state and plan encryption** ([`versions.tf`](../versions.tf)) out of the box—allowing `terraform.tfstate` to be safely committed directly to this public GitHub repository with **zero external cloud accounts**.
 
 ### How PBKDF2 + AES-GCM State Encryption Works
 
@@ -39,9 +39,9 @@ Your Passphrase ──► [ 1. PBKDF2 ("The Key Maker") ] ──► 256-bit Key 
 
 ## 2. Branch Protection Rulesets for an AI-Agent Workflow
 
-When working with autonomous AI coding agents, branch protection rulesets ([`rulesets.tf`](./rulesets.tf)) act as an API-level guardrail on `~DEFAULT_BRANCH` (`main`). Even if an agent runs `git push --force` or attempts to delete a branch, GitHub rejects the operation.
+When working with autonomous AI coding agents, branch protection rulesets ([`rulesets.tf`](../rulesets.tf)) act as an API-level guardrail on `~DEFAULT_BRANCH` (`main`). Even if an agent runs `git push --force` or attempts to delete a branch, GitHub rejects the operation.
 
-We use three declarative protection tiers in [`repos.tf`](./repos.tf):
+We use three declarative protection tiers in [`repos.tf`](../repos.tf):
 
 | Tier | Repositories | Policy on `~DEFAULT_BRANCH` (`main`) |
 | :--- | :--- | :--- |
@@ -53,8 +53,8 @@ We use three declarative protection tiers in [`repos.tf`](./repos.tf):
 
 ## 3. Repository Catalog & Declarative Imports
 
-- **[`repos.tf`](./repos.tf):** Defines all 7 active repositories in `local.repositories` (`github-as-code`, `aljazkovac`, `aljazkovac.github.io`, `eat-and-burn`, `calorie-balance`, `cockpit`, `playground`) with `prevent_destroy = true` so a repository can never be accidentally deleted by OpenTofu.
-- **[`imports.tf`](./imports.tf):** Uses declarative `import` blocks to bring pre-existing repositories under OpenTofu management idempotently.
+- **[`repos.tf`](../repos.tf):** Defines all 7 active repositories in `local.repositories` (`github-as-code`, `aljazkovac`, `aljazkovac.github.io`, `eat-and-burn`, `calorie-balance`, `cockpit`, `playground`) with `prevent_destroy = true` so a repository can never be accidentally deleted by OpenTofu.
+- **[`imports.tf`](../imports.tf):** Uses declarative `import` blocks to bring pre-existing repositories under OpenTofu management idempotently.
 
 ---
 
@@ -62,7 +62,7 @@ We use three declarative protection tiers in [`repos.tf`](./repos.tf):
 
 Locally, `tofu plan` and `tofu apply` authenticate automatically using your active `gh` CLI session and load your passphrase from the git-ignored `terraform.tfvars` file.
 
-For **GitHub Actions** ([`.github/workflows/opentofu.yml`](./.github/workflows/opentofu.yml)) to run `tofu plan` on Pull Requests and `tofu apply` on pushes to `main` across all repositories in your account:
+For **GitHub Actions** ([`.github/workflows/opentofu.yml`](../.github/workflows/opentofu.yml)) to run `tofu plan` on Pull Requests and `tofu apply` on pushes to `main` across all repositories in your account:
 
 1. **`TF_VAR_state_encryption_passphrase`** *(Already configured)*:
    Stored in `aljazkovac/github-as-code` Actions secrets to decrypt and re-encrypt `terraform.tfstate`.
