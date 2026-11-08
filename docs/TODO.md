@@ -15,7 +15,7 @@
      ```
 - [x] **Back Up Encryption Passphrase in Password Manager:**
   Save the `state_encryption_passphrase` value from your local `terraform.tfvars` into your password manager so you can always decrypt `terraform.tfstate` if you switch machines.
-- [ ] **Verify End-to-End PR Pipeline:**
+- [x] **Verify End-to-End PR Pipeline:**
   Create a small feature branch, open a Pull Request against `main`, verify that the `OpenTofu Plan Output` comment is posted automatically, and squash-merge to confirm `tofu apply` runs in GitHub Actions.
 
 ---
