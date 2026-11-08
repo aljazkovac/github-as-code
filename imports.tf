@@ -1,5 +1,6 @@
 locals {
   existing_repositories = toset([
+    "github-as-code",
     "aljazkovac",
     "aljazkovac.github.io",
     "eat-and-burn",
