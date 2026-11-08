@@ -28,20 +28,20 @@ Declarative Infrastructure-as-Code (IaC) repository that manages all active **`a
 ### 1. Local Setup
 
 ```bash
-# 1. Copy .env.example to .env and set your encryption passphrase
-cp .env.example .env
+# 1. Copy terraform.tfvars.example to terraform.tfvars and set your encryption passphrase
+cp terraform.tfvars.example terraform.tfvars
 
 # 2. Initialize OpenTofu
-make init
+tofu init
 
-# 3. Preview or apply changes (uses `gh auth token` automatically)
-make plan
-make apply
+# 3. Preview or apply changes (uses your `gh` CLI authentication automatically)
+tofu plan
+tofu apply
 ```
 
 ### 2. Common Operations
 
-- **Update topics or description:** Edit the entry in [`repos.tf`](./repos.tf) and open a PR (or run `make apply`).
+- **Update topics or description:** Edit the entry in [`repos.tf`](./repos.tf) and open a PR (or run `tofu apply`).
 - **Archive a retired project:** Change `archived = true` on the repository in [`repos.tf`](./repos.tf).
 - **Add a new repository:** Add a new block to `local.repositories` in [`repos.tf`](./repos.tf) and OpenTofu will create and protect it automatically.
 

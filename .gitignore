@@ -7,13 +7,12 @@ plan_output.txt
 crash.log
 crash.*.log
 
-# Local environment secrets (never commit!)
-.env
+# Local variable files (never commit!)
 *.tfvars
 *.tfvars.json
+!*.tfvars.example
 
 # OS & Editor files
 .DS_Store
 .idea/
 .vscode/
-

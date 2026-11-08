@@ -29,7 +29,7 @@ Your Passphrase ──► [ 1. PBKDF2 ("The Key Maker") ] ──► 256-bit Key 
 
 1. **PBKDF2 (*Password-Based Key Derivation Function 2* — "The Key Maker"):**
    - Encryption algorithms require an exact 256-bit binary key rather than a human-typed passphrase.
-   - PBKDF2 takes your `state_encryption_passphrase` (stored locally in git-ignored `.env` / `terraform.tfvars` and in GitHub Actions Secrets), mixes it with a random salt, and runs it through **600,000 SHA-512 hashing iterations** to derive a 256-bit key. That deliberate slowness makes brute-force guessing impractical.
+   - PBKDF2 takes your `state_encryption_passphrase` (stored locally in git-ignored `terraform.tfvars` and in GitHub Actions Secrets), mixes it with a random salt, and runs it through **600,000 SHA-512 hashing iterations** to derive a 256-bit key. That deliberate slowness makes brute-force guessing impractical.
 2. **AES-GCM (*Advanced Encryption Standard – Galois/Counter Mode* — "The Safe & Tamper Seal"):**
    - Uses the 256-bit key from PBKDF2 to encrypt and decrypt `terraform.tfstate` in memory (RAM) during `tofu plan` and `tofu apply`.
    - **AES** scrambles the state contents so anyone browsing the public repository only sees ciphertext (`"encrypted_data": "..."`).
@@ -60,7 +60,7 @@ We use three declarative protection tiers in [`repos.tf`](./repos.tf):
 
 ## 4. Cloud CI/CD Setup (`GH_PAT` & Secrets)
 
-Locally, `make plan` and `make apply` authenticate automatically using your active `gh` CLI session (`gh auth token`) and your git-ignored `terraform.tfvars` / `.env` file.
+Locally, `tofu plan` and `tofu apply` authenticate automatically using your active `gh` CLI session and load your passphrase from the git-ignored `terraform.tfvars` file.
 
 For **GitHub Actions** ([`.github/workflows/opentofu.yml`](./.github/workflows/opentofu.yml)) to run `tofu plan` on Pull Requests and `tofu apply` on pushes to `main` across all repositories in your account:
 

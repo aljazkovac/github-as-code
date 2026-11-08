@@ -1,3 +1,2 @@
 # Passphrase for OpenTofu PBKDF2 + AES-GCM state encryption (at least 16 characters)
-TF_VAR_state_encryption_passphrase="replace-with-strong-random-passphrase"
-
+state_encryption_passphrase = "replace-with-strong-random-passphrase"
