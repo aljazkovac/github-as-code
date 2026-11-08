@@ -32,8 +32,8 @@ locals {
       archived               = false
       topics                 = ["blog", "devops", "jekyll", "platform-engineering", "tech-leadership"]
       has_issues             = true
-      has_wiki               = true
-      has_projects           = true
+      has_wiki               = false
+      has_projects           = false
       has_discussions        = false
       delete_branch_on_merge = true
       protection_tier        = "direct-push"
@@ -45,8 +45,8 @@ locals {
       archived               = false
       topics                 = ["ai-agents", "fastapi", "google-health", "health-tech", "python"]
       has_issues             = true
-      has_wiki               = true
-      has_projects           = true
+      has_wiki               = false
+      has_projects           = false
       has_discussions        = false
       delete_branch_on_merge = true
       protection_tier        = "pr-required"
@@ -58,8 +58,8 @@ locals {
       archived               = false
       topics                 = ["android", "claude-api", "fastapi", "kotlin", "nutrition", "python"]
       has_issues             = true
-      has_wiki               = true
-      has_projects           = true
+      has_wiki               = false
+      has_projects           = false
       has_discussions        = false
       delete_branch_on_merge = true
       protection_tier        = "pr-required"
@@ -72,7 +72,7 @@ locals {
       topics                 = []
       has_issues             = true
       has_wiki               = false
-      has_projects           = true
+      has_projects           = false
       has_discussions        = false
       delete_branch_on_merge = false
       protection_tier        = "none"
@@ -85,7 +85,7 @@ locals {
       topics                 = []
       has_issues             = true
       has_wiki               = false
-      has_projects           = true
+      has_projects           = false
       has_discussions        = false
       delete_branch_on_merge = false
       protection_tier        = "none"
