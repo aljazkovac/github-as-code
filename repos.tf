@@ -90,6 +90,19 @@ locals {
       delete_branch_on_merge = true
       protection_tier        = "none"
     }
+
+    "pulse-pipeline" = {
+      description            = "A personal health data platform"
+      visibility             = "public"
+      archived               = false
+      topics                 = []
+      has_issues             = true
+      has_wiki               = false
+      has_projects           = false
+      has_discussions        = false
+      delete_branch_on_merge = true
+      protection_tier        = "none"
+    }
   }
 }
 
