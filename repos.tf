@@ -22,7 +22,7 @@ locals {
       has_wiki               = false
       has_projects           = false
       has_discussions        = false
-      delete_branch_on_merge = false
+      delete_branch_on_merge = true
       protection_tier        = "direct-push"
     }
 
@@ -74,7 +74,7 @@ locals {
       has_wiki               = false
       has_projects           = false
       has_discussions        = false
-      delete_branch_on_merge = false
+      delete_branch_on_merge = true
       protection_tier        = "none"
     }
 
@@ -87,7 +87,7 @@ locals {
       has_wiki               = false
       has_projects           = false
       has_discussions        = false
-      delete_branch_on_merge = false
+      delete_branch_on_merge = true
       protection_tier        = "none"
     }
   }
