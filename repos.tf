@@ -105,7 +105,7 @@ locals {
     }
 
     "til" = {
-      description            = "A personal learning and knowledge management archive."
+      description            = "Today I Learned (TIL) - a personal knowledge archive."
       visibility             = "private"
       archived               = false
       topics                 = []
