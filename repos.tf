@@ -75,7 +75,7 @@ locals {
       has_projects           = false
       has_discussions        = false
       delete_branch_on_merge = true
-      protection_tier        = "pr-required"
+      protection_tier        = "none"
     }
 
     "playground" = {
@@ -101,7 +101,7 @@ locals {
       has_projects           = false
       has_discussions        = false
       delete_branch_on_merge = true
-      protection_tier        = "none"
+      protection_tier        = "pr-required"
     }
   }
 }
