@@ -14,7 +14,7 @@ Declarative Infrastructure-as-Code (IaC) repository that manages all active **`a
    Uses OpenTofu's built-in **PBKDF2 + AES-GCM** state and plan encryption. `terraform.tfstate` is encrypted client-side before touching disk and safely committed directly to Git.
 3. **AI-Agent-Ready Branch Protection Rulesets ([`rulesets.tf`](./rulesets.tf)):**
    Enforces tiered `github_repository_ruleset` policies on `~DEFAULT_BRANCH` (`main`):
-   - **`pr-required` (Code repositories: `github-as-code`, `eat-and-burn`, `calorie-balance`):** Blocks branch deletion and force-pushes, enforces linear history, and requires Pull Requests (`required_approving_review_count = 0` so solo/agent PRs can be merged after CI checks without needing a second human account). Includes **Repository Admin** bypass (`actor_id = 5`).
+   - **`pr-required` (Code repositories: `github-as-code`, `eat-and-burn`, `calorie-balance`, `pulse-pipeline`):** Blocks branch deletion and force-pushes, enforces linear history, and requires Pull Requests (`required_approving_review_count = 0` so solo/agent PRs can be merged after CI checks without needing a second human account). Includes **Repository Admin** bypass (`actor_id = 5`).
    - **`direct-push` (Content repositories: `aljazkovac`, `aljazkovac.github.io`):** Blocks branch deletion and force-pushes while allowing direct pushes (e.g., automated daily RSS feed updates and blog posts).
    - **`none` (Private repositories: `cockpit`, `playground`):** Manages repository settings and visibility without attaching public-only GitHub Free rulesets.
 4. **GitOps CI/CD Pipeline ([`.github/workflows/opentofu.yml`](./.github/workflows/opentofu.yml)):**
