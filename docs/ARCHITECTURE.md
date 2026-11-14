@@ -45,7 +45,7 @@ We use three declarative protection tiers in [`repos.tf`](../repos.tf):
 
 | Tier | Repositories | Policy on `~DEFAULT_BRANCH` (`main`) |
 | :--- | :--- | :--- |
-| **`pr-required`** | `github-as-code`, `eat-and-burn`, `calorie-balance` | Blocks branch deletion (`deletion = true`) and force-pushes (`non_fast_forward = true`), enforces linear history (`required_linear_history = true`), and requires a Pull Request (`required_approving_review_count = 0` so solo/agent PRs can merge after CI checks without needing a second human account). Includes **Repository Admin (`actor_id = 5`)** bypass (`bypass_mode = "always"`). |
+| **`pr-required`** | `github-as-code`, `eat-and-burn`, `calorie-balance`, `pulse-pipeline` | Blocks branch deletion (`deletion = true`) and force-pushes (`non_fast_forward = true`), enforces linear history (`required_linear_history = true`), and requires a Pull Request (`required_approving_review_count = 0` so solo/agent PRs can merge after CI checks without needing a second human account). Includes **Repository Admin (`actor_id = 5`)** bypass (`bypass_mode = "always"`). |
 | **`direct-push`** | `aljazkovac`, `aljazkovac.github.io` | Blocks branch deletion and force-pushes while allowing direct commits to `main` so automated daily RSS feed syncs and blog publishing workflows run uninterrupted. |
 | **`none`** | `cockpit`, `playground` | Private repositories (GitHub Free only enforces rulesets on public repositories; if a repository's visibility is changed to `"public"`, OpenTofu automatically provisions its ruleset). |
 
@@ -53,7 +53,7 @@ We use three declarative protection tiers in [`repos.tf`](../repos.tf):
 
 ## 3. Repository Catalog & Declarative Imports
 
-- **[`repos.tf`](../repos.tf):** Defines all 7 active repositories in `local.repositories` (`github-as-code`, `aljazkovac`, `aljazkovac.github.io`, `eat-and-burn`, `calorie-balance`, `cockpit`, `playground`) with `prevent_destroy = true` so a repository can never be accidentally deleted by OpenTofu.
+- **[`repos.tf`](../repos.tf):** Defines all 8 active repositories in `local.repositories` (`github-as-code`, `aljazkovac`, `aljazkovac.github.io`, `eat-and-burn`, `calorie-balance`, `cockpit`, `playground`, `pulse-pipeline`) with `prevent_destroy = true` so a repository can never be accidentally deleted by OpenTofu.
 - **[`imports.tf`](../imports.tf):** Uses declarative `import` blocks to bring pre-existing repositories under OpenTofu management idempotently.
 
 ---
