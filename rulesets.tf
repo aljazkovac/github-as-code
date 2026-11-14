@@ -21,11 +21,16 @@ resource "github_repository_ruleset" "default_branch" {
     }
   }
 
-  # Repository Admin (actor_id = 5) can bypass when needed (e.g. automated workflows or urgent solo hotfixes)
-  bypass_actors {
-    actor_id    = 5
-    actor_type  = "RepositoryRole"
-    bypass_mode = "always"
+  # Only github-as-code includes Repository Admin (actor_id = 5) bypass so its GitHub Actions
+  # workflow can commit the updated encrypted terraform.tfstate back to main after a PR merge.
+  # All other pr-required repositories strictly block direct pushes to main for everyone.
+  dynamic "bypass_actors" {
+    for_each = each.key == "github-as-code" ? [1] : []
+    content {
+      actor_id    = 5
+      actor_type  = "RepositoryRole"
+      bypass_mode = "always"
+    }
   }
 
   rules {
