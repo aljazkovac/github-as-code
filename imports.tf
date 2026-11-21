@@ -7,7 +7,6 @@ locals {
     "calorie-balance",
     "cockpit",
     "playground",
-    "til",
   ])
 }
 
