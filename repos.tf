@@ -116,6 +116,19 @@ locals {
       delete_branch_on_merge = true
       protection_tier        = "none"
     }
+
+    "notes" = {
+      description            = "Personal plain-text Markdown knowledge base (Obsidian vault)."
+      visibility             = "private"
+      archived               = false
+      topics                 = []
+      has_issues             = true
+      has_wiki               = false
+      has_projects           = false
+      has_discussions        = false
+      delete_branch_on_merge = true
+      protection_tier        = "none"
+    }
   }
 }
 
