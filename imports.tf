@@ -7,7 +7,6 @@ locals {
     "calorie-balance",
     "cockpit",
     "playground",
-    "til",
   ])
 }
 
@@ -15,4 +14,12 @@ import {
   for_each = local.existing_repositories
   to       = github_repository.repos[each.key]
   id       = each.key
+}
+
+removed {
+  from = github_repository.repos["til"]
+
+  lifecycle {
+    destroy = false
+  }
 }
