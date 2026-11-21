@@ -15,11 +15,3 @@ import {
   to       = github_repository.repos[each.key]
   id       = each.key
 }
-
-removed {
-  from = github_repository.repos["til"]
-
-  lifecycle {
-    destroy = false
-  }
-}
