@@ -65,19 +65,6 @@ locals {
       protection_tier        = "pr-required"
     }
 
-    "cockpit" = {
-      description            = "Personal cockpit: goals, roadmaps, product backlogs, and writing drafts."
-      visibility             = "private"
-      archived               = false
-      topics                 = []
-      has_issues             = true
-      has_wiki               = false
-      has_projects           = false
-      has_discussions        = false
-      delete_branch_on_merge = true
-      protection_tier        = "none"
-    }
-
     "playground" = {
       description            = "Small AI, cloud, and programming experiments."
       visibility             = "private"
@@ -105,7 +92,7 @@ locals {
     }
 
     "notes" = {
-      description            = "Personal plain-text Markdown knowledge base (Obsidian vault)."
+      description            = "Personal knowledge base and cockpit: notes, roadmaps, backlogs, and writing drafts (Obsidian vault)."
       visibility             = "private"
       archived               = false
       topics                 = []
