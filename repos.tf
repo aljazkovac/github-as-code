@@ -91,7 +91,7 @@ locals {
       protection_tier        = "pr-required"
     }
 
-    "notes" = {
+    "notebook" = {
       description            = "Personal knowledge base and cockpit: notes, roadmaps, backlogs, and writing drafts (Obsidian vault)."
       visibility             = "private"
       archived               = false
