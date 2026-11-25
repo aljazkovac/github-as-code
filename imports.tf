@@ -5,7 +5,6 @@ locals {
     "aljazkovac.github.io",
     "eat-and-burn",
     "calorie-balance",
-    "cockpit",
     "playground",
   ])
 }
