@@ -16,7 +16,7 @@ Declarative Infrastructure-as-Code (IaC) repository that manages all active **`a
    Enforces tiered `github_repository_ruleset` policies on `~DEFAULT_BRANCH` (`main`):
    - **`pr-required` (Code repositories: `github-as-code`, `eat-and-burn`, `calorie-balance`, `pulse-pipeline`):** Blocks branch deletion and force-pushes, enforces linear history, and requires Pull Requests (`required_approving_review_count = 0` so solo/agent PRs can be merged after CI checks without needing a second human account). Direct pushes to `main` are blocked even for Repository Admin (except on `github-as-code`, where **Repository Admin** bypass `actor_id = 5` is enabled so GitHub Actions can commit updated encrypted `terraform.tfstate`).
    - **`direct-push` (Content repositories: `aljazkovac`, `aljazkovac.github.io`):** Blocks branch deletion and force-pushes while allowing direct pushes (e.g., automated daily RSS feed updates and blog posts).
-   - **`none` (Private repositories: `notes`, `playground`):** Manages repository settings and visibility without attaching public-only GitHub Free rulesets.
+   - **`none` (Private repositories: `notebook`, `playground`):** Manages repository settings and visibility without attaching public-only GitHub Free rulesets.
 4. **GitOps CI/CD Pipeline ([`.github/workflows/opentofu.yml`](./.github/workflows/opentofu.yml)):**
    - **Pull Requests:** Runs `tofu fmt -check`, `tofu validate`, and `tofu plan`, posting the plan diff as a sticky PR comment.
    - **Merge to `main`:** Runs `tofu apply -auto-approve` and commits the updated encrypted `terraform.tfstate`.
